@@ -8,3 +8,6 @@ Este Gist contiene el código para mover varios servos simultáneamente dependie
 Este Gist contiene el código para mover varios servos simultáneamente dependiendo del tiempo. Será preferible en aquellos casos en los que se requiera una cierta consistencia con la parte física y mecánica.
 
 ###enlaces relacionados
+
+Descubre más en [HIDALGO PROJECT](https://twitter.com/hacklab_upm)
+y en [youtube](https://www.youtube.com/channel/UCwPrFpED4I4EtF4O_MPC7jw)
