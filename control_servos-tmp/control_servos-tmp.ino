@@ -49,7 +49,7 @@ void loop(){
   for(int i=0;i<n;i++){                                                                                                                  //recorremos todos nuestros motores.
     TiempoActual=millis();                                                                                                               //medimos en qué instante estamosy lo usaremos para nuestro servo.
     if(TiempoActual-lista[i].TiempoRef>lista[i].per){                                                                                    //Si ya han pasado los "per" milisegundos desde nuestro último tiempo de referencia entonces entra en el if.
-      lista[i].wpos=LEER_INPUT(i,lista[i].angMin,lista[i].angMax);                                                                       //la señal de entrada en este caso es un potenciómetro.
+      lista[i].wpos=LEER_INPUT(i);                                                                       //la señal de entrada en este caso es un potenciómetro.
       lista[i].mov= (lista[i].wpos>lista[i].pos)? lista[i].vel:-lista[i].vel;                                                            //identifica hacia qué sentido ha de moverse.
       lista[i].pos = ( abs(lista[i].wpos-lista[i].pos) < abs(lista[i].mov*lista[i].vel))? lista[i].wpos :lista[i].pos + lista[i].mov;    //si va a recorrer más ángulos de los que quedan va directamente a la posición final. Evita oscilaciones
       lista[i].servo.write(lista[i].pos);                                                                                                //enviamos la posición que queremos al servo (normalmente 1 ó 2 grados distinta de la actual.
@@ -58,7 +58,7 @@ void loop(){
   }    
 }
 
-int LEER_INPUT(int j,int a, int b){
+int LEER_INPUT(int j){
   /*esta es la función para transformar el input en el ángulo al que quieres que vaya el servo.
    * En este caso es inútil ya que es igual para ambos, pero así es genérico. Además facilita
    * la lectura del código principal
@@ -70,10 +70,10 @@ int LEER_INPUT(int j,int a, int b){
    */
   switch(j){
     case 0:
-      return constrain( map( analogRead(potpin),0,1023,a,b ), lista[j].angMin, lista[j].angMax );
+      return constrain( map( analogRead(potpin),0,1023,lista[j].angMin,lista[j].angMax ), lista[j].angMin, lista[j].angMax );
       break;
     case 1:
-      return constrain( map( analogRead(potpin),0,1023,a,b ), lista[j].angMin, lista[j].angMax );
+      return constrain( map( analogRead(potpin),0,1023,lista[j].angMin,lista[j].angMax ), lista[j].angMin, lista[j].angMax );
       break;
     default:
       return lista[j].pos;
