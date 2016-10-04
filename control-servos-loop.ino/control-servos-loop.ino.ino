@@ -11,7 +11,7 @@ struct motor{
   int pin;        //el pin al que está conectado el servo.
   int angMin;     //ángulo mínimo al que vas a mover el servo
   int angMax;     //ángulo máximo al que vas a mover el servo
-  int pos;        //posición que tiene el servo.
+  int pos;        //posición actual del servo.
   int wpos;       //posición que deseamos que adquiera el servo.
   int mov;        //movimiento que tiene que realizar en esa iteración
   int pR;         //un parámetro de velocidad. Indica cuántos grados se moverá por iteración.Cuanto más alto, más rápido irá, pero valores altos sacrifican la "simultaneidad".
@@ -54,8 +54,8 @@ void loop(){
 
 
   if(cont%servoA.pL==0){                                                                                      //cada pL iteraciones del ciclo entra en el if.
-    servoA.wpos=LEER_INPUT(servoA.angMin,servoA.angMax);                                                                                   //la señal de entrada en este caso es un potenciómetro.
-    servoA.mov= (servoA.wpos>servoA.pos)? servoA.pR:-servoA.pR;                                                           //identifica hacia qué sentido ha de moverse.
+    servoA.wpos=LEER_INPUT(servoA.angMin,servoA.angMax);                                                      //la señal de entrada en este caso es un potenciómetro.
+    servoA.mov= (servoA.wpos>servoA.pos)? servoA.pR:-servoA.pR;                                               //identifica hacia qué sentido ha de moverse.
     servoA.pos=(abs(servoA.wpos-servoA.pos)<abs(servoA.mov*servoA.pR))? servoA.wpos:servoA.pos+servoA.mov;    //si va a recorrer más ángulos de los que quedan va directamente a la posición final. Evita oscilaciones
     servoA.servo.write(servoA.pos);
   }
@@ -72,6 +72,6 @@ void loop(){
 }
 
 int LEER_INPUT(int a, int b){
-  return map(analogRead(potpin),0,1023,a,b);       //la función sirve principalmente para facilitar la comprensión del código.
-}                                                  //Es en esta función donde hay que incluir la transformación input-grados que quieres que gire
+  return map(analogRead(potpin),0,1023,a,b);           //la función sirve principalmente para facilitar la comprensión del código.
+}                                                      //Es en esta función donde hay que incluir la transformación input-grados que quieres que gire
 
